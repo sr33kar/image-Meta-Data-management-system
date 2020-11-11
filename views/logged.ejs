@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <title>My Node App</title>
+</head>
+
+<body style="text-align: center;">
+    <br>
+    <br>
+
+    <h4>Search</h4>
+    <form method="post" action="/find">
+        <label for="name">Meta Data Major Label</label>
+        <input type="text" name="name1" style="width: 80px;">
+        <label for="name">Meta Data Minor Label(Optional)</label>
+        <input type="text" name="name2" style="width: 80px;">
+        <label for="name">Value</label>
+        <input type="text" name="prop" style="width: 80px;">
+        <input type="submit" value="Find">
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="container" style="max-width: 300px;">
+        <h4>File Upload</h4>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="file-field input-field">
+                <div class="btn grey">
+                    <span>Select File</span>
+                    <input name="myImage" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <br> Preview of previous upload:
+        <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img" style="max-height: 80px;">
+    </div>
+    <br>
+    <br>
+    <br>
+    <h4>Example Meta Data:</h4>
+    <img src="exampleData.jpeg" alt="">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+</body>
+
+</html>
