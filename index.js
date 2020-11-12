@@ -81,7 +81,7 @@ const storage = multer.diskStorage({
 });
 //init upload
 const upload = multer({
-    storage: storage,
+    storage: commmon.storage,
     fileFilter: function(req, file, cb) {
         checkFileType(file, cb);
     }
