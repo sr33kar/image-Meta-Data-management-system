@@ -6,45 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Node App</title>
+
+    <style>
+        .main {
+            background: yellow;
+            position: relative;
+            width: 1070px;
+            left: 42%;
+            height: 929px;
+            box-shadow: 0px 0px 17px 3px #888888;
+            top: -2%
+        }
+        
+        .form {
+            background: white;
+            width: 600px;
+            height: 929px;
+            box-shadow: 0px 0px 15px 0px #888888;
+        }
+        
+        body {
+            background: #ff4d4d;
+        }
+        
+        label,
+        h1 {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-weight: 400;
+        }
+        
+        input[type=text],
+        input[type=password] {
+            width: 150px;
+            height: 19px;
+            border-radius: 1px;
+            border-color: #000099;
+            border-style: solid;
+        }
+        
+        .add {
+            background: white;
+            width: 500px;
+            /*box-shadow: 0px 0px 6px 2px #888888;*/
+            position: relative;
+            left: 6%;
+        }
+        
+        .login,
+        .admin {
+            background: white;
+            width: 500px;
+            /*box-shadow: 0px 0px 6px 2px #888888;*/
+            position: relative;
+            left: 6%;
+        }
+        
+        input[type=submit] {
+            width: 150px;
+            border-radius: 1px;
+            background: #007bff;
+            border-color: white;
+            outline: none;
+            padding: 5px;
+            color: white;
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body style="text-align: center;">
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>Login</h1>
-    <form method="post" action="/item/auth">
-        <label for="name">User Name:</label>
-        <input type="text" name="name"><br>
-        <label for="name">Password:</label>
-        <input type="password" name="prop"><br>
-        <input type="submit" value="auth">
-    </form>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>Add yourself to our Database:</h1>
-    <form method="post" action="/item/addUser">
-        <label for="name">User Name:</label>
-        <input type="text" name="name"><br>
-        <label for="name">Password:</label>
-        <input type="password" name="pass"><br>
-        <input type="submit" value="addUser">
-    </form>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>Admin Login</h1>
-    <form method="post" action="/item/authAdmin">
-        <label for="name">User Name:</label>
-        <input type="text" name="name"><br>
-        <label for="name">Password:</label>
-        <input type="password" name="prop"><br>
-        <input type="submit" value="auth">
-    </form>
+    <div class="main">
+        <div class="form">
+
+            <body style="text-align: center;">
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1 class="login">Login</h1>
+
+                <%= msgTop%>
+                    <br>
+                    <form method="post" action="/item/auth">
+                        <label for="name">User Name:</label>
+                        <input type="text" name="name"><br>
+                        <br>
+
+                        <label for="name">Password:</label> &nbsp&nbsp
+                        <input type="password" name="prop"><br>
+                        <br><br>
+                        <input type="submit" value="Login">
+                    </form>
+                    <br>
+                    <br>
+
+
+                    <h1 class="add">Add yourself to our Database</h1>
+                    <%= msg%>
+                        <br>
+                        <form method="post" action="/item/addUser">
+                            <label for="name">User Name:</label>
+                            <input type="text" name="name"><br>
+                            <br>
+                            <label for="name">Password:</label> &nbsp&nbsp
+                            <input type="password" name="pass"><br>
+                            <br><br>
+                            <input type="submit" value="AddUser">
+                        </form>
+                        <br>
+                        <br>
+
+                        <h1 class="admin">Admin Login</h1>
+                        <br>
+                        <form method="post" action="/item/authAdmin">
+                            <label for="name">User Name:</label>
+                            <input type="text" name="name"><br>
+                            <br>
+                            <label for="name">Password:</label> &nbsp&nbsp
+                            <input type="password" name="prop"><br>
+                            <br><br>
+                            <input type="submit" value="Login">
+                        </form>
+            </body>
+
+        </div>
+    </div>
 </body>
 
 </html>

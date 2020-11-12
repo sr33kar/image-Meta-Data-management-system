@@ -57,15 +57,15 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, './public/uploads'))
     },
     filename: function(req, file, cb) {
-
+        var fileName = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
         try {
             //console.log("entered");
-            new ExifImage({ image: path.join('public/uploads/', file.originalname) }, function(error, exifData) {
+            new ExifImage({ image: path.join('public/uploads/', fileName) }, function(error, exifData) {
                 if (error) {
                     console.log('Error: ' + error.message);
                 } else {
                     //console.log(exifData); // Do something with your data!
-                    exifData.path = path.join('public/uploads/', file.originalname);
+                    exifData.path = path.join('public/uploads/', fileName);
                     //console.log(exifData);
                     const newImage = new ImageData(exifData);
                     newImage.save().then(item => res.redirect('/loggedIn'));
@@ -76,7 +76,7 @@ const storage = multer.diskStorage({
         } catch (error) {
             console.log('Error: ' + error.message);
         }
-        cb(null, file.originalname);
+        cb(null, fileName);
     }
 });
 //init upload
@@ -130,7 +130,9 @@ app.post('/upload', (req, res) => {
 
 
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    var msg = '';
+    var msgTop = '';
+    res.render('index.ejs', { msgTop, msg });
 });
 app.get('/loggedIn', (req, res) => {
     Item.find()
@@ -163,6 +165,17 @@ app.post('/item/auth', (req, res) => {
                 })
                 .catch(err => res.status(404).json({ msg: 'No items found' }));
         }*/
+        User.count({ name: uname, pass: pass }, function(err, count) {
+            if (count > 0) {
+                //document exists });
+                return res.redirect('/loggedIn');
+            } else {
+                var msgTop = 'Wrong Credentials';
+                var msg = '';
+                return res.render('index.ejs', { msgTop, msg });
+            }
+        });
+        /*
         const result = User.find({ name: uname, pass: pass });
         //console.log(result);
         var url = '/';
@@ -171,7 +184,7 @@ app.post('/item/auth', (req, res) => {
             //console.log("fgsherujrul");
             return res.redirect('/loggedIn');
         }
-        return res.redirect('/');
+        return res.redirect('/');*/
     }
 });
 app.post('/item/addUser', (req, res) => {
@@ -179,7 +192,17 @@ app.post('/item/addUser', (req, res) => {
         name: req.body.name,
         pass: req.body.pass
     });
-    newUser.save().then(user => res.redirect('/'));
+    var uname = req.body.name;
+    User.count({ name: uname }, function(err, count) {
+        if (count > 0) {
+            //document exists });
+            var msgTop = '';
+            var msg = 'Username Already Taken!!'
+            return res.render('index', { msgTop, msg });
+        } else {
+            newUser.save().then(user => res.redirect('/'));
+        }
+    });
 });
 app.post('/item/Add', (req, res) => {
     const newItem = new Item({
