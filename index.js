@@ -57,7 +57,7 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, './public/uploads'))
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+
         try {
             //console.log("entered");
             new ExifImage({ image: path.join('public/uploads/', file.originalname) }, function(error, exifData) {
@@ -76,6 +76,7 @@ const storage = multer.diskStorage({
         } catch (error) {
             console.log('Error: ' + error.message);
         }
+        cb(null, file.originalname);
     }
 });
 //init upload
@@ -101,26 +102,29 @@ function checkFileType(file, cb) {
     }
 }
 app.post('/upload', (req, res) => {
-    upload(req, res, (err) => {
-        if (err) {
-            res.render('logged', {
-                msg: err
-            });
-        } else {
-            if (req.file == undefined) {
+    var async_func = async function(req, res) {
+        upload(req, res, (err) => {
+            if (err) {
                 res.render('logged', {
-                    msg: 'Error: No File Selected!'
+                    msg: err
                 });
             } else {
-                //console.log(req.file);
-                res.render('logged', {
-                    msg: 'File Uploaded!',
-                    file: `uploads/${req.file.filename}`
-                });
+                if (req.file == undefined) {
+                    res.render('logged', {
+                        msg: 'Error: No File Selected!'
+                    });
+                } else {
+                    //console.log(req.file);
+                    res.render('logged', {
+                        msg: 'File Uploaded!',
+                        file: `uploads/${req.file.filename}`
+                    });
 
+                }
             }
-        }
-    });
+        });
+    }
+    async_func(req, res);
 });
 
 
